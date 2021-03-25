@@ -1,6 +1,7 @@
 const paths = require('./paths')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: {
@@ -12,15 +13,22 @@ module.exports = {
     publicPath: '/'
   },
   module: {
-    // rules: [
-    //   { test: /\.js$/ }
-    // ]
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      }
+    ]
   },
   plugins: [
     new HTMLWebpackPlugin({
       title: 'webgl sample page',
       template: `${paths.src}/index.html`
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      'earcut': 'earcut'
+    })
   ]
 }

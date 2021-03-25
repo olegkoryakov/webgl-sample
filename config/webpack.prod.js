@@ -7,12 +7,12 @@ module.exports = merge(config, {
   devtool: false,
   output: {
     path: paths.app,
-    publicPath: '/',
+    publicPath: './',
     filename: 'js/[name].js'
   },
   optimization: {
-    mininize: true,
-    runtimeChunks: {
+    minimize: true,
+    runtimeChunk: {
       name: 'runtime'
     }
   }

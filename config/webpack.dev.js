@@ -8,10 +8,9 @@ module.exports = merge(config, {
   devtool: 'inline-source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: paths.app,
+    contentBase: paths.src,
     open: true,
     compress: true,
-    hot: true,
     port: 3030
   },
   plugins: [
