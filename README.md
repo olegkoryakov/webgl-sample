@@ -4,4 +4,4 @@
   * hexagonal
   * octaeder
 ## demo
-[click me!](https://www.google.com)
+[click me!](https://olegkoryakov.github.io/webgl-sample/)
