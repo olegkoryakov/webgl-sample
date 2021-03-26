@@ -13,16 +13,20 @@ const createScene = function () {
   const camera = new BABYLON.ArcRotateCamera(
     'camera',
     -(Math.PI / 2),
-    0,
-    20,
+    Math.PI / 2,
+    30,
     new BABYLON.Vector3(0, 0, 0),
     scene
   );
 
   camera.attachControl(canvas, true)
 
-  const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(1, 1, -1), scene)
-  light.intensity = 0.7
+  const light = new BABYLON.HemisphericLight(
+    'light',
+    new BABYLON.Vector3(0, 10, -5),
+    scene
+  )
+  light.intensity = 0.9
 
   const tetrahedronVertexes = [
     [0, 3, 0],
@@ -54,6 +58,7 @@ const createScene = function () {
   const tetrahedronOptions = {
     name: 'tetrahedron',
     category: ['Prism'],
+    updatable: true,
     vertex: tetrahedronVertexes,
     face: [
       [1, 0, 2],
@@ -66,6 +71,7 @@ const createScene = function () {
   const hexagonalOptions = {
     name: 'hexagonal',
     category: ['Prism'],
+    updatable: true,
     vertex: hexagonalVertexes,
     face: [
       [7, 6, 2, 3],
@@ -99,7 +105,8 @@ const createScene = function () {
     'tetrahedron',
     {
       custom: tetrahedronOptions
-    }
+    },
+    scene
   )
 
   // гексаэдр
@@ -108,6 +115,7 @@ const createScene = function () {
     {
       custom: hexagonalOptions
     },
+    scene
   )
 
   // октаэдр
@@ -304,14 +312,47 @@ const createScene = function () {
   )
 
   hexagonalCascade.visibility = 0
+
   octaederCascade.visibility = 0
   tetrahedronCascade.visibility = 0
+
+  hexagonal.position.y = 3
+  hexagonalCascade.position.y = 3
 
   tetrahedron.position.x = -7
   octaeder.position.x = 7
 
   octaederCascade.position.x = 7
   tetrahedronCascade.position.x = - 7
+
+  tetrahedron.material = new BABYLON.StandardMaterial(
+    'tetrahedronMaterial',
+    scene
+  )
+  tetrahedron.material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random())
+
+  octaeder.material = new BABYLON.StandardMaterial(
+    'octaederMaterial',
+    scene
+  )
+  octaeder.material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random())
+
+  hexagonal.material = new BABYLON.StandardMaterial(
+    'hexagonalMaterial',
+    scene
+  )
+
+  hexagonal.material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random())
+
+  // hexagonal.rotation = new BABYLON.Vector3(0, 1.5, 0)
+  // hexagonalCascade.rotation = new BABYLON.Vector3(0, 1.5, 0)
+
+  // octaeder.rotation = new BABYLON.Vector3(6.5, 1.5, 0)
+  // octaederCascade.rotation = new BABYLON.Vector3(6.5, 1.5, 0)
+
+  // tetrahedron.rotation = new BABYLON.Vector3(-6.5, 1.5, 0)
+  // tetrahedronCascade.rotation = new BABYLON.Vector3(-6.5, 1.5, 0)
+
   const SPACE_CODE = 32
 
   scene.onKeyboardObservable.add(({ type, event }) => {
@@ -331,6 +372,26 @@ const createScene = function () {
             break
         }
     }
+  })
+
+  scene.registerBeforeRender(() => {
+    // tetreahedron
+    tetrahedron.rotation.x += 0.01
+    tetrahedron.rotation.y -= 0.01
+    tetrahedronCascade.rotation.y -= 0.01
+    tetrahedronCascade.rotation.x += 0.01
+
+    // hexagonal
+    hexagonal.rotation.x -= 0.01
+    hexagonal.rotation.y + 0.01
+    hexagonalCascade.rotation.y += 0.01
+    hexagonalCascade.rotation.x -= 0.01
+
+    // octaeder
+    octaeder.rotation.x -= 0.01
+    octaeder.rotation.y -= 0.01
+    octaederCascade.rotation.y -= 0.01
+    octaederCascade.rotation.x -= 0.01
   })
 
   return scene;
