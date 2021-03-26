@@ -383,7 +383,7 @@ const createScene = function () {
 
     // hexagonal
     hexagonal.rotation.x -= 0.01
-    hexagonal.rotation.y + 0.01
+    hexagonal.rotation.y += 0.01
     hexagonalCascade.rotation.y += 0.01
     hexagonalCascade.rotation.x -= 0.01
 
